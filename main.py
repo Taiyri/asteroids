@@ -1,8 +1,10 @@
+import sys
 import pygame
 from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from circleshape import *
 
 updatable = pygame.sprite.Group()
 drawable = pygame.sprite.Group()
@@ -20,7 +22,7 @@ def main():
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     AsteroidField()
 
     while True:
@@ -30,6 +32,10 @@ def main():
 
         for object in updatable:
             object.update(dt)
+
+        for object in asteroids:
+            if CircleShape.collision_checker(object, player):
+                sys.exit("Game Over!")
 
         screen.fill((0,0,0))
         
